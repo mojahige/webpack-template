@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+@import "ress/ress";
+
+$gray: #eee;
+
+body {
+  color: #000;
+  background-color: $gray;
+}
