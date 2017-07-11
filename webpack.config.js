@@ -54,6 +54,7 @@ module.exports = [
       publicPath: '/',
       filename: 'assets/dist/stylesheets/[name].bundle.css'
     },
+    devtool: process.env.NODE_ENV === 'production' ? '': 'source-map',
     module: {
       rules: [
         {
