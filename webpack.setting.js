@@ -1,12 +1,3 @@
-const path = require('path');
-
-const sassOptions = {
-  includePaths: [
-    __dirname + '/node_modules',
-  ],
-  sourceMap: true
-};
-
 module.exports = {
   css: {
     develop: [
