@@ -1,14 +1,11 @@
-export default {
-  addition: (x, y) => {
-    return x + y;
-  },
-  subtraction: (x, y) => {
-    return x - y;
-  },
-  multiplication: (x, y) => {
-    return x * y;
-  },
-  division: (x, y) => {
-    return x / y;
-  }
-};
+export function sum(a, b){
+  return a + b;
+}
+
+export function sub(a, b){
+  return a - b;
+}
+
+export function mul(a, b){
+  return a * b;
+}
