@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackSetting = require('./webpack.setting');
 const bundleCSS = new ExtractTextPlugin({ filename: 'assets/dist/stylesheets/[name].bundle.css', allChunks: true });
 
@@ -18,7 +19,7 @@ module.exports = {
     }
   },
   output: {
-    path: __dirname + '/htdocs/',
+    // path: __dirname + '/htdocs/',
     publicPath: '/',
     filename: 'assets/dist/javascripts/[name].bundle.js'
   },
@@ -50,6 +51,9 @@ module.exports = {
     ]
   },
   plugins: [
-    bundleCSS
+    bundleCSS,
+    new HtmlWebpackPlugin({
+      template: path.resolve('htdocs/index.html')
+    })
   ]
 };
