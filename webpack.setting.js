@@ -19,7 +19,12 @@ module.exports = {
       'postcss-loader',
       {
         loader: 'sass-loader',
-        options: sassOptions
+        options: {
+          includePaths: [
+            __dirname + '/node_modules',
+          ],
+          sourceMap: true
+        }
       }
     ],
     production: [
@@ -30,7 +35,11 @@ module.exports = {
       'postcss-loader',
       {
         loader: 'sass-loader',
-        options: sassOptions
+        options: {
+          includePaths: [
+            __dirname + '/node_modules',
+          ]
+        }
       }
     ]
   }
