@@ -1,4 +1,3 @@
-import styles from '../stylesheets/_hoge.scss';
 import { sum } from './calc';
 
 class Onigiri {
