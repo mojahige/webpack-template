@@ -1,76 +1,102 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpackSetting = require('./webpack.setting');
+const path = require('path')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const isDevelopment = process.env.NODE_ENV !== 'production'
+const buildMode = isDevelopment ? 'development' : 'production'
+
+console.log(`mode: ${buildMode}`)
 
 module.exports = [
   {
-    context: path.resolve(__dirname, './htdocs/assets/src/javascripts'),
     entry: {
-      app: './app.js',
+      app: './htdocs/assets/javascripts/src/app.js'
+    },
+    output: {
+      path: path.resolve(__dirname, 'htdocs/assets/javascripts'),
+      publicPath: '/assets/javascripts',
+      filename: '[name].js'
     },
     resolve: {
-      modules: [
-        __dirname + '/node_modules'
-      ],
-      alias: {
-        src: __dirname + '/htdocs/assets/src/javascripts',
-      }
-    },
-    output: {
-      path: __dirname + '/htdocs/',
-      publicPath: '/',
-      filename: 'assets/dist/javascripts/[name].bundle.js'
+      extensions: ['*', '.js'],
+      modules: [__dirname + '/node_modules', 'node_modules']
     },
     devServer: {
-      contentBase: 'htdocs',
-      inline: true
-      // hot: true
+      contentBase: path.resolve(__dirname, 'htdocs'),
+      open: true
     },
-    devtool: process.env.NODE_ENV === 'production' ? '': 'source-map',
     module: {
       rules: [
         {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: [{
-            loader: 'babel-loader',
-            options: { presets: [
-              [ 'es2015', { modules: false } ]
-            ]}
-          }]
+          test: /\.(js)$/,
+          use: 'babel-loader'
         }
       ]
-    }
+    },
+    optimization: !isDevelopment
+      ? {
+          minimizer: [
+            new UglifyJSPlugin({
+              uglifyOptions: { extractComments: true }
+            })
+          ]
+        }
+      : {}
   },
   {
-    context: path.resolve(__dirname, './htdocs/assets/src/stylesheets'),
     entry: {
-      style: './_hoge.scss',
+      app: './htdocs/assets/stylesheets/src/app.scss'
     },
     output: {
-      path: __dirname + '/htdocs/',
-      publicPath: '/',
-      filename: 'assets/dist/stylesheets/[name].bundle.css'
+      path: path.resolve(__dirname, 'htdocs/assets/stylesheets'),
+      publicPath: '/assets/stylesheets',
+      filename: '[name].css'
     },
-    devtool: process.env.NODE_ENV === 'production' ? '': 'source-map',
+    resolve: {
+      alias: {
+        javascripts: path.join(__dirname, 'htdocs/assets/javascripts/src')
+      },
+      modules: [__dirname + '/node_modules', 'node_modules']
+    },
+    devtool: isDevelopment ? 'source-map' : '',
     module: {
       rules: [
         {
-          test: /\.(sass|scss)$/,
-          use:  ExtractTextPlugin.extract({
+          test: /\.scss$/,
+          use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: process.env.NODE_ENV === 'production' ? webpackSetting.css.production: webpackSetting.css.develop
-          }),
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  url: false,
+                  minimize: !isDevelopment,
+                  sourceMap: isDevelopment,
+                  importLoaders: 2
+                }
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  ident: 'postcss',
+                  sourceMap: isDevelopment,
+                  plugins: [
+                    require('autoprefixer')({
+                      grid: true
+                    })
+                  ]
+                }
+              },
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: isDevelopment
+                }
+              }
+            ]
+          })
         }
       ]
     },
-    plugins: [
-      new ExtractTextPlugin({
-        filename: 'assets/dist/stylesheets/[name].bundle.css',
-        allChunks: true
-      })
-    ]
+    plugins: [new ExtractTextPlugin('[name].css')]
   }
-];
+]
