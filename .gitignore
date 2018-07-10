@@ -155,5 +155,5 @@ typings/
 
 
 # Project Setting
-htdocs/assets/dist/javascripts/
-htdocs/assets/dist/stylesheets/
+htdocs/assets/javascripts/*.js
+htdocs/assets/stylesheets/*.css
