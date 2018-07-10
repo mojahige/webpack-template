@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+$gray: #eee;
+
+* {
+  box-sizing: border-box;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  color: #333;
+  background-color: $gray;
+}
