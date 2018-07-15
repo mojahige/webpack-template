@@ -69,7 +69,6 @@ module.exports = [
                 loader: 'css-loader',
                 options: {
                   url: false,
-                  minimize: !isDevelopment,
                   sourceMap: isDevelopment,
                   importLoaders: 2
                 }
