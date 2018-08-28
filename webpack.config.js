@@ -1,5 +1,4 @@
 const path = require('path')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const buildMode = isDevelopment ? 'development' : 'production'
@@ -32,16 +31,7 @@ module.exports = [
           exclude: /node_modules/
         }
       ]
-    },
-    optimization: !isDevelopment
-      ? {
-          minimizer: [
-            new UglifyJSPlugin({
-              uglifyOptions: { extractComments: true }
-            })
-          ]
-        }
-      : {}
+    }
   },
   {
     entry: {
