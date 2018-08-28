@@ -10,7 +10,7 @@
 
 ## Commands
 
-```
+``` bash
 # Develop
 $ npm start 
 
