@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --debug --output-pathinfo --progress --colors --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "server": "browser-sync start --server --cwd ./htdocs/ --serveStatic ./htdocs/"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "@babel/preset-env": "^7.0.0",
     "autoprefixer": "^9.1.3",
     "babel-loader": "^8.0.0-beta.0",
+    "browser-sync": "^2.24.7",
     "css-loader": "^1.0.0",
     "csswring": "^7.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
